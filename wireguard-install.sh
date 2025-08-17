@@ -529,9 +529,10 @@ else
 	echo "   1) Add a new client"
 	echo "   2) Remove an existing client"
 	echo "   3) Remove WireGuard"
-	echo "   4) Exit"
+	echo "   4) Restart WireGuard" # RESTART_OPTION
+	echo "   5) Exit" # RESTART_OPTION
 	read -p "Option: " option
-	until [[ "$option" =~ ^[1-4]$ ]]; do
+	until [[ "$option" =~ ^[1-5]$ ]]; do # RESTART_OPTION
 		echo "$option: invalid selection."
 		read -p "Option: " option
 	done
@@ -701,7 +702,15 @@ else
 			fi
 			exit
 		;;
-		4)
+		4) # RESTART_OPTION
+			echo
+			echo "Restarting WireGuard..."
+			wg-quick down wg0
+			wg-quick up wg0
+			echo "WireGuard Restarted."
+			exit
+		;;
+		5) # RESTART_OPTION
 			exit
 		;;
 	esac
